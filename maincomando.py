@@ -1,6 +1,9 @@
+#importando bibliotecas
+
 import curses
-import time
-from curses import wrapper, newwin, textpad
+from curses import newwin
+
+#defindo a função principal
 
 def funcao_principal(telaprincipal):
 
@@ -32,7 +35,11 @@ def funcao_principal(telaprincipal):
     inicio = newwin(1, tartarugax, tartarugay, 45)
     inicio.clear()
     inicio.addstr("PRESSIONE [ENTER] PARA COMEÇAR", verde)
+
     curses.curs_set(0)
+
+#atualizando a tela e esperando resposta do usuário
+
     inicio.getch()
     inicio.clear()
     inicio.refresh()
@@ -50,25 +57,32 @@ def funcao_principal(telaprincipal):
 #criando janela da caixa de digitação
 
         curses.curs_set(1)
+
         texto = newwin(1, largura - 20, altura-1, 0)
+
         texto.clear()
         texto.addstr("DIGITE AS MOVIMENTAÇÕES:", verde)
         texto.refresh()
+
         digitado = texto.getstr(0, len("DIGITE AS MOVIMENTAÇÕES:"), largura - 20).decode("utf-8")
 
-#condicionais para receber o sentido e a quantidade de casas para andar        
+#separando o que foi digitado em uma array em que o item 0 é a string do sentido e o item 1 é o número inteiro        
         
         sentido = str(digitado.split(" ")[0])
         casa_final = int(digitado.split(" ")[1])
         casa_atual = 0
         
+#criando as condicionais para receber o sentido e a quantidade de casas para andar
+
 #comando para não existir movimentação negativa
 
         if casa_final < 0:
             window.addstr(1, 1, "[ NÃO HÁ MOVIMENTAÇÃO NEGATIVA | PRESSIONE [ENTER] PARA RESETAR ]", troca)
+
             window.getch()
             window.clear()
             window.border()
+
             window.addstr(tartarugay,tartarugax, ' ', verde)
             tartarugay, tartarugax = altura // 2, largura // 2
             window.addstr(tartarugay,tartarugax, '@', verde)
@@ -175,10 +189,13 @@ def funcao_principal(telaprincipal):
         
         else:
             window.addstr(1, 1, "[ ESSA DIREÇÃO NÃO EXISTE | PRESSIONE [ENTER] PARA RESETAR ]", troca)
+
             window.getch()
             window.clear()
             window.border()
+
             window.addstr(tartarugay,tartarugax, ' ', verde)
             tartarugay, tartarugax = altura // 2, largura // 2
             window.addstr(tartarugay,tartarugax, '@', verde)
+            
         window.refresh()
